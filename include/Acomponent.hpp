@@ -3,6 +3,7 @@
 
 #include "nts.hpp"
 
+namespace nts {
 class AComponent : public nts::IComponent {
 public:
   virtual ~AComponent() = default;
@@ -11,5 +12,6 @@ public:
   virtual void setLink(std::size_t pin, nts::IComponent &other,
                        std::size_t otherPin);
 };
+}
 
 #endif
