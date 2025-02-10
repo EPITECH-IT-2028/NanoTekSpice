@@ -10,7 +10,6 @@ env:
 
 jobs:
   program_compilation:
-    needs: coding-style
     name: Check Program Compilation
     runs-on: ubuntu-latest
     container: 
