@@ -45,7 +45,6 @@ jobs:
           exit 0
 
   push_to_mirror:
-    needs: run_tests
     name: Push to Mirror Repository
     runs-on: ubuntu-latest
     container: 
