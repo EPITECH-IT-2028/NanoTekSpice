@@ -1,4 +1,5 @@
 SRC = src/main.cpp \
+			src/execution.cpp \
 
 OBJ = $(SRC:.cpp=.o)
 

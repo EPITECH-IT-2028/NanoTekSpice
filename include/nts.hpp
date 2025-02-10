@@ -16,4 +16,8 @@ public:
 };
 } // namespace nts
 
+// Functions definitions
+
+int execute();
+
 #endif
