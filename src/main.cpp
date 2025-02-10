@@ -1,4 +1,3 @@
-int main()
-{
-    return 0;
-}
+#include "Acomponent.hpp"
+
+int main() { return 0; }
