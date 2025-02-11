@@ -1,3 +1,4 @@
+#include "nts.hpp"
 #include <iostream>
 #include <string>
 
@@ -6,7 +7,7 @@
  * @param void
  * @return 0
  */
-int execute() {
+int nts::execute() {
   std::string word;
 
   while (std::getline(std::cin, word)) {
