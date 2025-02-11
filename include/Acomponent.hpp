@@ -17,8 +17,12 @@ public:
             
 protected:
   std::map<std::size_t, std::pair<nts::IComponent *, std::size_t>> _conection;
+
+private:
+  nts::Tristate _pins;
+  std::size_t _tick = 0;
 };
-}
+} // namespace nts
 
 #endif
  

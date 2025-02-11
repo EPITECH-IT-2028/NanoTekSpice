@@ -10,8 +10,8 @@ public:
   OPComponent() = default;
 
 private:
-    std::size_t _pin = nts::Tristate::Undefined;
+  std::size_t _pin = nts::Tristate::Undefined;
 };
-}
+} // namespace nts
 
 #endif

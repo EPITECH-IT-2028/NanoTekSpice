@@ -16,6 +16,10 @@ public:
                        std::size_t otherPin) = 0;
 };
 
+// Functions definitions
+
+int execute();
+
 } // namespace nts
 
 void parser(const std::string &path);

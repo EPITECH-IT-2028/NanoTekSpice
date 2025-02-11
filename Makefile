@@ -2,6 +2,7 @@ SRC = src/main.cpp \
 	src/factory.cpp \
 	src/AComponent.cpp \
 	src/parser.cpp \
+	src/execution.cpp \
 
 OBJ = $(SRC:.cpp=.o)
 

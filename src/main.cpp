@@ -4,5 +4,5 @@
 int main(int argc, char **argv) 
 {
     parser(argv[1]);
-    return 0; 
+    return nts::execute();; 
 }
