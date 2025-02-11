@@ -13,7 +13,6 @@ jobs:
   program_compilation:
     name: Check Program Compilation
     if: "github.repository != 'EpitechPromo2028/B-OOP-400-BDX-4-1-tekspice-nolann.dubos.git'"
-    if: github.event_name != 'pull_request'
     runs-on: ubuntu-latest
     container: 
       image: epitechcontent/epitest-docker
@@ -50,6 +49,7 @@ jobs:
   push_to_mirror:
     needs: program_compilation
     name: Push to Mirror Repository
+    if: github.event_name != 'pull_request'
     runs-on: ubuntu-latest
     container: 
       image: epitechcontent/epitest-docker
