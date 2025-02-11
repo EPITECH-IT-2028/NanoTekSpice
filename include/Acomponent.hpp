@@ -8,7 +8,7 @@ class AComponent : public nts::IComponent {
 public:
   virtual ~AComponent() = default;
   virtual void simulate(std::size_t tick);
-  virtual nts::Tristate compute(std::size_t pin) = 0;
+  virtual nts::Tristate compute(std::size_t pin);
   virtual void setLink(std::size_t pin, nts::IComponent &other,
                        std::size_t otherPin);
 };
