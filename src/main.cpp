@@ -1,8 +1,8 @@
 #include "nts.hpp"
-#include <cassert>
 
-int main(int argc, char **argv) 
-{
-    parser(argv[1]);
-    return nts::execute();; 
+int main(int argc, char **argv) {
+  if (argc != 2)
+    return 84; // TODO : throw exception
+  parser(argv[1]);
+  return nts::execute();
 }
