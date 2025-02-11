@@ -1,13 +1,13 @@
 SRC = src/main.cpp \
 	src/factory.cpp \
+	src/AComponent.cpp \
 	src/parser.cpp \
-	src/AComponent.cpp
 
 OBJ = $(SRC:.cpp=.o)
 
 NAME = nanotekspice
 
-CPPFLAGS = -W -Wall -Wextra  -std=c++20 -I./include
+CPPFLAGS = -W -Wall -Wextra  -std=c++20 -I./include -g
 
 CRITF = --coverage -lcriterion
 
