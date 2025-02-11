@@ -7,10 +7,12 @@ on:
 
 env:
   MIRROR_URL: "git@github.com:EpitechPromo2028/B-OOP-400-BDX-4-1-tekspice-nolann.dubos.git"
+  EXECUTABLES: "nanotekspice"
 
 jobs:
   program_compilation:
     name: Check Program Compilation
+    if: "github.repository != 'EpitechPromo2028/B-OOP-400-BDX-4-1-tekspice-nolann.dubos.git'"
     runs-on: ubuntu-latest
     container: 
       image: epitechcontent/epitest-docker
@@ -45,10 +47,10 @@ jobs:
           exit 0
 
   push_to_mirror:
+    needs: program_compilation
     name: Push to Mirror Repository
+    if: github.event_name != 'pull_request'
     runs-on: ubuntu-latest
-    container: 
-      image: epitechcontent/epitest-docker
     steps:
       - name: Checkout Repository
         uses: actions/checkout@v4
