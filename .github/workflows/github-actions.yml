@@ -28,6 +28,7 @@ jobs:
 
       - name: Verify Executables
         run: |
+          #!/bin/bash
           IFS=',' read -ra EXE_ARRAY <<< "$EXECUTABLES"
           found=false
           for exe in "${EXE_ARRAY[@]}"; do
@@ -46,7 +47,6 @@ jobs:
           exit 0
 
   push_to_mirror:
-    needs: program_compilation
     name: Push to Mirror Repository
     if: github.event_name != 'pull_request'
     runs-on: ubuntu-latest
