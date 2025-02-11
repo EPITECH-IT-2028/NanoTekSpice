@@ -1,8 +1,7 @@
 #include "nts.hpp"
 
-int main() 
+int main(int argc, char **argv) 
 {
-    std::string path = "~/Downloads/B-OOP-400_nanotekspice/2076_rom.nts";
-    nts::parser(path);
+    parser(argv[1]);
     return 0; 
 }

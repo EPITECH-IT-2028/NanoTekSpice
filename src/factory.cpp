@@ -3,10 +3,7 @@
 #include "clockComponent.hpp"
 #include "falseComponent.hpp"
 #include "inputComponent.hpp"
-#include "nts.hpp"
 #include "trueComponent.hpp"
-#include <memory>
-#include <string>
 
 std::unique_ptr<nts::IComponent> nts::Factory::createComponent(const std::string &type)
 {
