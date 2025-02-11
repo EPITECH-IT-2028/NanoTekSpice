@@ -11,7 +11,6 @@ env:
 
 jobs:
   program_compilation:
-    name: Check Program Compilation
     if: "github.repository != 'EpitechPromo2028/B-OOP-400-BDX-4-1-tekspice-nolann.dubos.git'"
     runs-on: ubuntu-latest
     container: 
