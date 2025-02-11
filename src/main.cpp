@@ -1,3 +1,3 @@
 #include "nts.hpp"
 
-int main() { return execute(); }
+int main() { return nts::execute(); }
