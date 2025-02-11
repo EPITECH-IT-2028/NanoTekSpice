@@ -45,6 +45,7 @@ jobs:
           exit 0
 
   push_to_mirror:
+    needs: program_compilation
     name: Push to Mirror Repository
     if: github.event_name != 'pull_request'
     runs-on: ubuntu-latest
