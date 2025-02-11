@@ -1,0 +1,9 @@
+*.o
+
+nanotekspice
+
+vscode/
+
+.cache/
+
+compile_commands.json
