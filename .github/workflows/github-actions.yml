@@ -28,10 +28,8 @@ jobs:
 
       - name: Verify Executables
         run: |
-          #!/bin/bash
-          IFS=',' read -ra EXE_ARRAY <<< "$EXECUTABLES"
           found=false
-          for exe in "${EXE_ARRAY[@]}"; do
+          for exe in $EXECUTABLES; do
             if [ -f "./$exe" ]; then
               found=true
               if [ ! -x "./$exe" ]; then
