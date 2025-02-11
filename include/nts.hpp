@@ -14,6 +14,11 @@ public:
   virtual void setLink(std::size_t pin, nts::IComponent &other,
                        std::size_t otherPin) = 0;
 };
+
+// Functions definitions
+
+int execute();
+
 } // namespace nts
 
 #endif

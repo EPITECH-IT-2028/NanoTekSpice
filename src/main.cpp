@@ -1,3 +1,3 @@
-#include "Acomponent.hpp"
+#include "nts.hpp"
 
-int main() { return 0; }
+int main() { return nts::execute(); }

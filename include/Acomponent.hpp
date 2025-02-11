@@ -11,7 +11,11 @@ public:
   virtual nts::Tristate compute(std::size_t pin);
   virtual void setLink(std::size_t pin, nts::IComponent &other,
                        std::size_t otherPin);
+
+private:
+  nts::Tristate _pins;
+  std::size_t _tick = 0;
 };
-}
+} // namespace nts
 
 #endif
