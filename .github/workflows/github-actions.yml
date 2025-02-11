@@ -11,7 +11,7 @@ env:
 
 jobs:
   program_compilation:
-    if: "github.repository != 'EpitechPromo2028/B-OOP-400-BDX-4-1-tekspice-nolann.dubos.git'"
+    if: github.repository != 'EpitechPromo2028/B-OOP-400-BDX-4-1-tekspice-nolann.dubos.git'
     runs-on: ubuntu-latest
     container: 
       image: epitechcontent/epitest-docker
