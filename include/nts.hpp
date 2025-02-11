@@ -2,6 +2,7 @@
 #define COMPONENTS_HPP_
 
 #include <iostream>
+#include <memory>
 
 namespace nts {
 enum Tristate { Undefined = (-true), True = true, False = false };
@@ -20,5 +21,7 @@ public:
 int execute();
 
 } // namespace nts
+
+void parser(const std::string &path);
 
 #endif

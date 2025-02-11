@@ -4,7 +4,7 @@
 #include "Acomponent.hpp"
 
 namespace nts {
-class TrueComponent : public AComponent {
+class TrueComponent : public nts::AComponent {
 public:
   ~TrueComponent() = default;
   TrueComponent() = default;
