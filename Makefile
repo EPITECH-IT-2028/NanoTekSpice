@@ -1,4 +1,6 @@
 SRC = src/main.cpp \
+		src/factory.cpp \
+		src/parser.cpp \
 
 OBJ = $(SRC:.cpp=.o)
 
@@ -13,7 +15,7 @@ CC = g++
 all: $(NAME) clean
 
 $(NAME): $(OBJ)
-	$(CC) -lncurses -o $(NAME) $(OBJ)
+	$(CC) -o $(NAME) $(OBJ)
 
 clean:
 	find . -name "*~" -delete
