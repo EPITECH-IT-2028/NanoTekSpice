@@ -19,7 +19,7 @@ public:
 
 // Functions definitions
 
-int execute();
+int execute(std::map<std::string, std::shared_ptr<nts::IComponent>> components);
 
 } // namespace nts
 

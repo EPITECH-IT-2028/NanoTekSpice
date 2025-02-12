@@ -14,13 +14,12 @@ public:
   virtual nts::Tristate compute(std::size_t pin) override {};
   virtual void setLink(std::size_t pin, nts::IComponent &other,
                        std::size_t otherPin) override;
-  virtual void setPin(std::size_t pin);
+  virtual void setPin(std::size_t pin) = 0;
 
 protected:
   std::map<std::size_t, std::pair<nts::IComponent *, std::size_t>> _connection;
 
 private:
-  nts::Tristate _pins;
   std::size_t _tick = 0;
 };
 } // namespace nts
