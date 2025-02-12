@@ -7,7 +7,7 @@ namespace nts {
 class TrueComponent : public nts::SpecialComponent {
 public:
   ~TrueComponent() = default;
-  TrueComponent() {setState(nts::Tristate::False);};
+  TrueComponent() {setState(nts::Tristate::True);};
 };
 }
 

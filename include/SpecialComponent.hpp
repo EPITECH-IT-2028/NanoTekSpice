@@ -13,7 +13,7 @@ public:
   void setPin(std::size_t pin) override;
   void setState(nts::Tristate state);
 
-private:
+protected:
   std::size_t _pin;
   nts::Tristate _state;
 };
