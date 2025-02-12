@@ -1,16 +1,13 @@
 #ifndef OPCOMPONENTS_HPP_
 #define OPCOMPONENTS_HPP_
 
-#include "Acomponent.hpp"
+#include "SpecialComponent.hpp"
 
 namespace nts {
-class OPComponent : public AComponent {
+class OPComponent : public SpecialComponent {
 public:
   ~OPComponent() = default;
-  OPComponent() = default;
-
-private:
-  std::size_t _pin = nts::Tristate::Undefined;
+  OPComponent() {setState(nts::Tristate::Undefined);};
 };
 } // namespace nts
 

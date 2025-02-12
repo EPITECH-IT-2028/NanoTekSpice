@@ -2,15 +2,14 @@
 #define FALSECOMPONENTS_HPP_
 
 #include "Acomponent.hpp"
+#include "SpecialComponent.hpp"
+#include "nts.hpp"
 
 namespace nts {
-class FalseComponent : public AComponent {
+class FalseComponent : public nts::SpecialComponent {
 public:
   ~FalseComponent() = default;
-  FalseComponent() = default;
-
-private:
-    std::size_t _pin = nts::Tristate::False;
+  FalseComponent() {setState(nts::Tristate::False);};
 };
 }
 
