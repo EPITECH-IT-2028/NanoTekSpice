@@ -1,16 +1,13 @@
 #ifndef TRUECOMPONENTS_HPP_
 #define TRUECOMPONENTS_HPP_
 
-#include "Acomponent.hpp"
+#include "SpecialComponent.hpp"
 
 namespace nts {
-class TrueComponent : public nts::AComponent {
+class TrueComponent : public nts::SpecialComponent {
 public:
   ~TrueComponent() = default;
-  TrueComponent() = default;
-
-private:
-    std::size_t _pin = nts::Tristate::True;
+  TrueComponent() {setState(nts::Tristate::False);};
 };
 }
 

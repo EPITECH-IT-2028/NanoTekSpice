@@ -9,6 +9,7 @@
 #include <vector>
 #include <iostream>
 
+static
 std::map<std::string, std::shared_ptr<nts::IComponent>> getComponents(std::ifstream *strm)
 {
     std::map<std::string, std::shared_ptr<nts::IComponent>> map;
@@ -28,6 +29,7 @@ std::map<std::string, std::shared_ptr<nts::IComponent>> getComponents(std::ifstr
     return map;
 }
 
+static
 void split_inf(const std::string& str, char delimiter, std::vector<std::string>& inf) {
     std::stringstream s(str);
     std::string info;
@@ -35,9 +37,9 @@ void split_inf(const std::string& str, char delimiter, std::vector<std::string>&
         inf.push_back(info);
 }
 
+static
 void getLinks(std::ifstream *strm, std::map<std::string, std::shared_ptr<nts::IComponent>> &map)
 {
-    std::map<std::pair<std::shared_ptr<nts::IComponent>, nts::Tristate>, std::pair<std::shared_ptr<nts::IComponent>, nts::Tristate>> links;
     std::string res;
     std::string cp1;
     std::string cp2;
