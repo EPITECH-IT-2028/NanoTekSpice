@@ -2,6 +2,7 @@
 #define AND_HPP_
 
 #include "Acomponent.hpp"
+#include <vector>
 
 namespace nts {
 
