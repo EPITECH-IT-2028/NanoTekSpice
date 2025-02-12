@@ -3,6 +3,7 @@ SRC = src/main.cpp \
 	src/AComponent.cpp \
 	src/parser.cpp \
 	src/execution.cpp \
+	src/components/AndGate.cpp \
 
 OBJ = $(SRC:.cpp=.o)
 
