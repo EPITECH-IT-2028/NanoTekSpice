@@ -1,13 +1,11 @@
 #include "Factory.hpp"
 #include "nts.hpp"
-#include <map>
+#include <fstream>
 #include <memory>
 #include <sstream>
 #include <string>
-#include <fstream>
 #include <utility>
 #include <vector>
-#include <iostream>
 
 static
 std::map<std::string, std::shared_ptr<nts::IComponent>> getComponents(std::ifstream *strm)
@@ -57,21 +55,27 @@ void getLinks(std::ifstream *strm, std::map<std::string, std::shared_ptr<nts::IC
     }
 }
 
-void parser(const std::string &path)
-{
-    std::ifstream strm;
-    std::string res;
-    std::map<std::string, std::shared_ptr<nts::IComponent>> map;
-    strm.open(path, std::ifstream::in);
-    if (!strm.is_open())
-        return;
-    while (std::getline(strm, res)) {
-        if (res.size() == 0 || res[0] == '#')
-            continue;
-        if (res.find(".chipsets:") != res.npos) {
-            map = getComponents(&strm);
-            getLinks(&strm, map);
-        }
+/*
+ * This function is the parser of the program.
+ * @param std::string path
+ * @return void or throw exception
+ */
+std::map<std::string, std::shared_ptr<nts::IComponent>> parser(const std::string &path) {
+  std::ifstream strm;
+  std::string res;
+  std::map<std::string, std::shared_ptr<nts::IComponent>> map;
+
+  strm.open(path, std::ifstream::in);
+  if (!strm.is_open())
+    return map; // TODO: throw exeception
+  while (std::getline(strm, res)) {
+    if (res.size() == 0 || res[0] == '#')
+      continue;
+    if (res.find(".chipsets:") != res.npos) {
+      map = getComponents(&strm);
+      getLinks(&strm, map);
     }
-    strm.close();
+  }
+  strm.close();
+  return map;
 }
