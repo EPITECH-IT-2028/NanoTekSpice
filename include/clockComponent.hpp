@@ -1,16 +1,13 @@
 #ifndef CLOCKCOMPONENTS_HPP_
 #define CLOCKCOMPONENTS_HPP_
 
-#include "Acomponent.hpp"
+#include "SpecialComponent.hpp"
 
 namespace nts {
-class ClockComponent : public AComponent {
+class ClockComponent : public nts::SpecialComponent {
 public:
   ~ClockComponent() = default;
   ClockComponent() = default;
-
-private:
-    std::size_t _pin = nts::Tristate::Undefined;
 };
 }
 
