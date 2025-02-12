@@ -2,7 +2,7 @@ SRC = src/main.cpp \
 	src/factory.cpp \
 	src/parser.cpp \
 	src/execution.cpp \
-	src/components/AndGate.cpp \
+	src/components/Gate.cpp \
 	src/components/SpecialComponent.cpp \
 	src/components/AComponent.cpp \
 
