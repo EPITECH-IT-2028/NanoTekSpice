@@ -1,10 +1,10 @@
 SRC = src/main.cpp \
 	src/factory.cpp \
-	src/components/AComponent.cpp \
 	src/parser.cpp \
 	src/execution.cpp \
 	src/components/AndGate.cpp \
 	src/components/SpecialComponent.cpp \
+	src/components/AComponent.cpp \
 
 OBJ = $(SRC:.cpp=.o)
 
