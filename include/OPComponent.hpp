@@ -9,7 +9,7 @@ public:
   ~OPComponent() = default;
   OPComponent() {setState(nts::Tristate::Undefined);};
 
-  virtual void simulate(std::size_t tick) override {
+  void simulate(std::size_t tick) override {
     setState(_connection[_pin].first->compute(_connection[_pin].second));
   };
 

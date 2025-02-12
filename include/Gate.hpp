@@ -2,6 +2,7 @@
 #define GATE_HPP_
 
 #include "Acomponent.hpp"
+#include <vector>
 
 namespace nts {
 
@@ -12,6 +13,7 @@ public:
   ~AndGate() = default;
 
   nts::Tristate compute(std::size_t pin) override;
+  void setPin(std::size_t pin) override;
 
 private:
   std::vector<std::size_t> _pins = {0, 0, 0};
@@ -22,6 +24,7 @@ public:
   OrGate() = default;
 
   nts::Tristate compute(std::size_t pin) override;
+  void setPin(std::size_t pin) override;
 
 private:
   std::vector<std::size_t> _pins = {0, 0, 0};
@@ -32,6 +35,7 @@ public:
   XorGate() = default;
 
   nts::Tristate compute(std::size_t pin) override;
+  void setPin(std::size_t pin) override;
 
 private:
   std::vector<std::size_t> _pins = {0, 0, 0};

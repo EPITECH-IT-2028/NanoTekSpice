@@ -1,13 +1,24 @@
 #include "OPComponent.hpp"
 #include "SpecialComponent.hpp"
 #include "nts.hpp"
+#include <cstddef>
 #include <iostream>
-#include <list>
 #include <string>
+#include <vector>
+#include <algorithm>
 
-void display(std::map<std::string, std::shared_ptr<nts::IComponent>> &components) {
-  std::list<std::string> disp_input;
-  std::list<std::string> disp_output;
+void sort(std::vector<std::string> &list) {
+  for (std::size_t i = 0; i < list.size(); i++) {
+    for (std::size_t j = i + 1; j < list.size(); j++) {
+      if (list[i] > list[j])
+        std::swap(list[i], list[j]);
+    }
+  }
+}
+
+void doDisplay(std::map<std::string, std::shared_ptr<nts::IComponent>> &components) {
+  std::vector<std::string> disp_input;
+  std::vector<std::string> disp_output;
   for (const auto &component : components) {
       std::string name = component.first;
     if (dynamic_cast<nts::OPComponent *>(component.second.get())) {
@@ -17,35 +28,33 @@ void display(std::map<std::string, std::shared_ptr<nts::IComponent>> &components
     if (dynamic_cast<nts::SpecialComponent *>(component.second.get()))
       disp_input.push_back(name);
   }
+  sort(disp_input);
+  sort(disp_output);
   //std::cout << "tick: " << tick << std::endl;
   std::cout << "input(s):" << std::endl;
   for (std::string name : disp_input) {
     std::cout << "   " << name << ": ";
     nts::Tristate state = components[name]->compute(1);
-    if (state == nts::False)
-      std::cout << "0";
-    else if (state == nts::True)
-      std::cout << "1";
-    else
+    if (state == nts::Tristate::Undefined)
       std::cout << "U";
+    else
+     std::cout << state;
     std::cout << std::endl;
   }
   std::cout << "output(s):" << std::endl;
   for (std::string name : disp_output) {
     std::cout << "   " << name << ": ";
     nts::Tristate state = components[name]->compute(1);
-    if (state == nts::False)
-      std::cout << "0";
-    else if (state == nts::True)
-      std::cout << "1";
-    else
+    if (state == nts::Tristate::Undefined)
       std::cout << "U";
+    else
+     std::cout << state;
     std::cout << std::endl;
   }
 }
 
-void simulate(std::map<std::string, std::shared_ptr<nts::IComponent>> components) {
-  std::list<std::string> outputs;
+void doSimulate(std::map<std::string, std::shared_ptr<nts::IComponent>> components) {
+  std::vector<std::string> outputs;
   for (const auto &component : components) {
       std::string name = component.first;
     if (dynamic_cast<nts::OPComponent *>(component.second.get()))
@@ -69,9 +78,9 @@ int nts::execute(std::map<std::string, std::shared_ptr<nts::IComponent>> compone
     if (word == "exit")
       break;
     if (word == "display")
-      display(components);
+      doDisplay(components);
     if (word == "simulate")
-      simulate(components);
+      doSimulate(components);
     if (word == "loop")
       continue;
     std::cout << "> ";

@@ -22,6 +22,15 @@ nts::Tristate nts::AndGate::compute(std::size_t pin) {
   return nts::Tristate::False;
 }
 
+void nts::AndGate::setPin(std::size_t pin) {
+  for (std::size_t i = 0; i < _pins.size(); i++) {
+    if (_pins[i] == 0) {
+      _pins[i] = pin;
+      return;
+    }
+  }
+}
+
 nts::Tristate nts::OrGate::compute(std::size_t pin) {
   std::vector<nts::Tristate> state;
 
@@ -42,6 +51,15 @@ nts::Tristate nts::OrGate::compute(std::size_t pin) {
   return nts::Tristate::True;
 }
 
+void nts::OrGate::setPin(std::size_t pin) {
+  for (std::size_t i = 0; i < _pins.size(); i++) {
+    if (_pins[i] == 0) {
+      _pins[i] = pin;
+      return;
+    }
+  }
+}
+
 nts::Tristate nts::XorGate::compute(std::size_t pin) {
   std::vector<nts::Tristate> state;
 
@@ -59,4 +77,13 @@ nts::Tristate nts::XorGate::compute(std::size_t pin) {
   if (state[0] == nts::Tristate::True && state[1] == nts::Tristate::False)
     return nts::Tristate::True;
   return nts::Tristate::Undefined;
+}
+
+void nts::XorGate::setPin(std::size_t pin) {
+  for (std::size_t i = 0; i < _pins.size(); i++) {
+    if (_pins[i] == 0) {
+      _pins[i] = pin;
+      return;
+    }
+  }
 }
