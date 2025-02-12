@@ -2,15 +2,12 @@
 #define AND_HPP_
 
 #include "Acomponent.hpp"
-#include <vector>
 
 namespace nts {
 
-class AndGate : public nts::AComponent {
+class OrGate : public nts::AComponent {
 public:
-  AndGate() = default;
-
-  ~AndGate() = default;
+  OrGate() = default;
 
   nts::Tristate compute(std::size_t pin) override;
 

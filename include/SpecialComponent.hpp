@@ -4,9 +4,6 @@
 #include "Acomponent.hpp"
 #include "nts.hpp"
 #include <cstddef>
-#include <map>
-#include <memory>
-#include <utility>
 
 namespace nts {
 class SpecialComponent : public nts::AComponent {
@@ -17,10 +14,9 @@ public:
   void setState(nts::Tristate state);
 
 private:
-    std::size_t _pin;
-    nts::Tristate _state;
+  std::size_t _pin;
+  nts::Tristate _state;
 };
 } // namespace nts
 
 #endif
- 
