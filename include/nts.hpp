@@ -3,6 +3,7 @@
 
 #include <iostream>
 #include <memory>
+#include <map>
 
 namespace nts {
 enum Tristate { Undefined = (-true), True = true, False = false };
@@ -22,6 +23,6 @@ int execute();
 
 } // namespace nts
 
-void parser(const std::string &path);
+std::map<std::string, std::shared_ptr<nts::IComponent>> parser(const std::string &path);
 
 #endif

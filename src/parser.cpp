@@ -1,7 +1,6 @@
 #include "Factory.hpp"
 #include "nts.hpp"
 #include <fstream>
-#include <map>
 #include <memory>
 #include <sstream>
 #include <string>
@@ -67,14 +66,14 @@ void getLinks(std::ifstream *strm,
  * @param std::string path
  * @return void or throw exception
  */
-void parser(const std::string &path) {
+std::map<std::string, std::shared_ptr<nts::IComponent>> parser(const std::string &path) {
   std::ifstream strm;
   std::string res;
   std::map<std::string, std::shared_ptr<nts::IComponent>> map;
 
   strm.open(path, std::ifstream::in);
   if (!strm.is_open())
-    return; // TODO: throw exeception
+    return map; // TODO: throw exeception
   while (std::getline(strm, res)) {
     if (res.size() == 0 || res[0] == '#')
       continue;
@@ -84,4 +83,5 @@ void parser(const std::string &path) {
     }
   }
   strm.close();
+  return map;
 }
