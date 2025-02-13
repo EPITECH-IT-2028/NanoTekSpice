@@ -1,5 +1,6 @@
 #include "Gate.hpp"
 #include "OPComponent.hpp"
+#include "nts.hpp"
 #include <vector>
 
 void nts::Gate::setLink(std::size_t pin, nts::IComponent &other,
@@ -90,6 +91,26 @@ void nts::XorGate::simulate(std::size_t tick) {
   else if (states[0] == nts::Tristate::True &&
            states[1] == nts::Tristate::False)
     _pins[_output] = nts::Tristate::True;
+  else
+    _pins[_output] = nts::Tristate::Undefined;
+}
+
+void nts::NotGate::simulate(std::size_t tick) {
+  for (auto &[pin, other] : _connection) {
+    if (pin != _output) {
+      other.first->simulate(tick);
+      _pins[pin] = other.first->compute(other.second);
+    }
+  }
+  std::vector<nts::Tristate> states;
+  for (auto &[pin, state] : _pins) {
+    if (pin != _output)
+      states.push_back(compute(pin));
+  }
+  if (states[0] == nts::Tristate::False)
+    _pins[_output] = nts::Tristate::True;
+  else if (states[0] == nts::Tristate::True)
+    _pins[_output] = nts::Tristate::False;
   else
     _pins[_output] = nts::Tristate::Undefined;
 }

@@ -5,6 +5,7 @@
 #include "falseComponent.hpp"
 #include "inputComponent.hpp"
 #include "trueComponent.hpp"
+#include <memory>
 
 const std::unordered_map<std::string,
                          std::function<std::shared_ptr<nts::IComponent>()>>
@@ -17,7 +18,7 @@ const std::unordered_map<std::string,
         {"and", []() { return std::make_shared<AndGate>(); }},
         {"or", []() { return std::make_shared<OrGate>(); }},
         {"xor", []() { return std::make_shared<XorGate>(); }},
-};
+        {"not", []() { return std::make_shared<NotGate>(); }}};
 
 std::shared_ptr<nts::IComponent>
 nts::Factory::createComponent(const std::string &type) {
