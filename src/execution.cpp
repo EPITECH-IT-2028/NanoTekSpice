@@ -1,6 +1,10 @@
 #include "OPComponent.hpp"
+#include "inputComponent.hpp"
+#include "nts.hpp"
 #include <algorithm>
 #include <iostream>
+#include <sstream>
+#include <string>
 #include <vector>
 
 static void sort(std::vector<std::string> &list) {
@@ -47,8 +51,8 @@ doDisplay(std::map<std::string, std::shared_ptr<nts::IComponent>> &components) {
   display(disp_output, "output(s):", components);
 }
 
-void doSimulate(
-    std::map<std::string, std::shared_ptr<nts::IComponent>> components) {
+static void
+doSimulate(std::map<std::string, std::shared_ptr<nts::IComponent>> components) {
   std::vector<std::string> outputs;
   for (const auto &component : components) {
     std::string name = component.first;
@@ -57,6 +61,28 @@ void doSimulate(
   }
   for (std::string name : outputs) {
     components[name]->simulate(1);
+  }
+}
+
+void operatorOverload(
+    std::map<std::string, std::shared_ptr<nts::IComponent>> components,
+    std::string word) {
+  for (const auto &component : components) {
+    std::string str = component.first;
+    if (word.find(str) != std::string::npos) {
+      std::shared_ptr<nts::InputComponent> inputComponent =
+          std::static_pointer_cast<nts::InputComponent>(component.second);
+      std::string tmp;
+      std::stringstream str(word);
+      std::getline(str, tmp, '=');
+      int a = std::stol(tmp);
+      if (a == 0)
+        inputComponent->setState(nts::Tristate::False);
+      else if (a == 1)
+        inputComponent->setState(nts::Tristate::True);
+      else
+        inputComponent->setState(nts::Tristate::Undefined);
+    }
   }
 }
 
@@ -79,6 +105,8 @@ int nts::execute(
       doSimulate(components);
     else if (word == "loop")
       continue;
+    else
+      operatorOverload(components, word);
     std::cout << "> ";
   }
   return 0;
