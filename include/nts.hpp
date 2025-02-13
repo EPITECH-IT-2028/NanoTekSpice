@@ -1,7 +1,6 @@
 #ifndef COMPONENTS_HPP_
 #define COMPONENTS_HPP_
 
-#include <iostream>
 #include <memory>
 #include <map>
 
@@ -20,9 +19,9 @@ public:
 // Functions definitions
 
 int execute(std::map<std::string, std::shared_ptr<nts::IComponent>> components);
+std::map<std::string, std::shared_ptr<nts::IComponent>> parser(const std::string &path);
 
 } // namespace nts
 
-std::map<std::string, std::shared_ptr<nts::IComponent>> parser(const std::string &path);
 
 #endif

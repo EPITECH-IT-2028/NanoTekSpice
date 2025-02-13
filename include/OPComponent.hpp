@@ -10,9 +10,10 @@ public:
   OPComponent() {setState(nts::Tristate::Undefined);};
 
   void simulate(std::size_t tick) override {
-    setState(_connection[_pin].first->compute(_connection[_pin].second));
+    auto &other = _connection.begin()->second;
+    other.first->simulate(tick);
+    setState(other.first->compute(other.second));
   };
-
 };
 } // namespace nts
 

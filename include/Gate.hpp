@@ -2,43 +2,41 @@
 #define GATE_HPP_
 
 #include "Acomponent.hpp"
-#include <vector>
 
 namespace nts {
 
-class AndGate : public nts::AComponent {
-public:
-  AndGate() = default;
-
-  ~AndGate() = default;
-
-  nts::Tristate compute(std::size_t pin) override;
-  void setPin(std::size_t pin) override;
-
-private:
-  std::vector<std::size_t> _pins = {0, 0, 0};
+class Gate : public nts::AComponent {
+  public:
+    virtual ~Gate() = default;
+    
+    virtual nts::Tristate compute(std::size_t pin) override;
+    virtual void setPin(std::size_t pin) override;
+    virtual void setLink(std::size_t pin, nts::IComponent &other,
+                       std::size_t otherPin) override;
+  protected:
+    std::map<std::size_t, nts::Tristate> _pins;
+    std::size_t _output = 0;
 };
 
-class OrGate : public nts::AComponent {
+class AndGate : public nts::Gate {
+public:
+  ~AndGate() = default;
+
+  void simulate(std::size_t tick) override;
+};
+
+class OrGate : public nts::Gate {
 public:
   OrGate() = default;
 
-  nts::Tristate compute(std::size_t pin) override;
-  void setPin(std::size_t pin) override;
-
-private:
-  std::vector<std::size_t> _pins = {0, 0, 0};
+  void simulate(std::size_t tick) override;
 };
 
-class XorGate : public nts::AComponent {
+class XorGate : public nts::Gate {
 public:
   XorGate() = default;
 
-  nts::Tristate compute(std::size_t pin) override;
-  void setPin(std::size_t pin) override;
-
-private:
-  std::vector<std::size_t> _pins = {0, 0, 0};
+  void simulate(std::size_t tick) override;
 };
 
 } // namespace nts
