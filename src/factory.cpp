@@ -5,7 +5,6 @@
 #include "falseComponent.hpp"
 #include "inputComponent.hpp"
 #include "trueComponent.hpp"
-#include <memory>
 
 const std::unordered_map<std::string,
                          std::function<std::shared_ptr<nts::IComponent>()>>

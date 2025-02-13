@@ -1,89 +1,89 @@
 #include "Gate.hpp"
-#include "nts.hpp"
+#include "OPComponent.hpp"
 #include <vector>
 
-nts::Tristate nts::AndGate::compute(std::size_t pin) {
-  std::vector<nts::Tristate> state;
+void nts::Gate::setLink(std::size_t pin, nts::IComponent &other,
+                              std::size_t otherPin) {
+  if (dynamic_cast<nts::OPComponent *>(&other))
+    _output = pin;
+  setPin(pin);
+  _connection[pin] = std::make_pair(&other, otherPin);
+};
 
-  for (size_t &i : _pins) {
-    if (i == pin)
-      continue;
-    state.push_back(_connection[i].first->compute(_connection[i].second));
-  }
-  if (state[0] == nts::Tristate::True && state[1] == nts::Tristate::True)
-    return nts::Tristate::True;
-  if (state[0] == nts::Tristate::True && state[1] == nts::Tristate::Undefined)
-    return nts::Tristate::Undefined;
-  if (state[0] == nts::Tristate::Undefined && state[1] == nts::Tristate::True)
-    return nts::Tristate::Undefined;
-  if (state[0] == nts::Tristate::Undefined &&
-      state[1] == nts::Tristate::Undefined)
-    return nts::Tristate::Undefined;
-  return nts::Tristate::False;
+void nts::Gate::setPin(std::size_t pin) {
+      _pins[pin] = Undefined;
 }
 
-void nts::AndGate::setPin(std::size_t pin) {
-  for (std::size_t i = 0; i < _pins.size(); i++) {
-    if (_pins[i] == 0) {
-      _pins[i] = pin;
-      return;
+nts::Tristate nts::Gate::compute(std::size_t pin) {return _pins[pin];}
+
+void nts::AndGate::simulate(std::size_t tick) {
+  for (auto &[pin, other] : _connection) {
+    if (pin != _output) {
+      other.first->simulate(tick);
+      _pins[pin] = other.first->compute(other.second);
     }
   }
-}
-
-nts::Tristate nts::OrGate::compute(std::size_t pin) {
-  std::vector<nts::Tristate> state;
-
-  for (size_t &i : _pins) {
-    if (i == pin)
-      continue;
-    state.push_back(_connection[i].first->compute(_connection[i].second));
+  std::vector<nts::Tristate> states;
+  for (auto &[pin, state] : _pins) {
+    if (pin != _output)
+      states.push_back(compute(pin));
   }
-  if (state[0] == nts::Tristate::False && state[1] == nts::Tristate::False)
-    return nts::Tristate::False;
-  if (state[0] == nts::Tristate::False && state[1] == nts::Tristate::Undefined)
-    return nts::Tristate::Undefined;
-  if (state[0] == nts::Tristate::Undefined && state[1] == nts::Tristate::False)
-    return nts::Tristate::Undefined;
-  if (state[0] == nts::Tristate::Undefined &&
-      state[1] == nts::Tristate::Undefined)
-    return nts::Tristate::Undefined;
-  return nts::Tristate::True;
+  if (states[0] == nts::Tristate::True && states[1] == nts::Tristate::True)
+    _pins[_output] = nts::Tristate::True;
+  else if (states[0] == nts::Tristate::True && states[1] == nts::Tristate::Undefined)
+    _pins[_output] = nts::Tristate::Undefined;
+  else if (states[0] == nts::Tristate::Undefined && states[1] == nts::Tristate::True)
+    _pins[_output] = nts::Tristate::Undefined;
+  else if (states[0] == nts::Tristate::Undefined && states[1] == nts::Tristate::Undefined)
+    _pins[_output] = nts::Tristate::Undefined;
+  else
+    _pins[_output] = nts::Tristate::False;
 }
 
-void nts::OrGate::setPin(std::size_t pin) {
-  for (std::size_t i = 0; i < _pins.size(); i++) {
-    if (_pins[i] == 0) {
-      _pins[i] = pin;
-      return;
+void nts::OrGate::simulate(std::size_t tick) {
+  for (auto &[pin, other] : _connection) {
+    if (pin != _output) {
+      other.first->simulate(tick);
+      _pins[pin] = other.first->compute(other.second);
     }
   }
-}
-
-nts::Tristate nts::XorGate::compute(std::size_t pin) {
-  std::vector<nts::Tristate> state;
-
-  for (size_t &i : _pins) {
-    if (i == pin)
-      continue;
-    state.push_back(_connection[i].first->compute(_connection[i].second));
+  std::vector<nts::Tristate> states;
+  for (auto &[pin, state] : _pins) {
+    if (pin != _output)
+      states.push_back(compute(pin));
   }
-  if (state[0] == nts::Tristate::False && state[1] == nts::Tristate::False)
-    return nts::Tristate::False;
-  if (state[0] == nts::Tristate::True && state[1] == nts::Tristate::True)
-    return nts::Tristate::False;
-  if (state[0] == nts::Tristate::False && state[1] == nts::Tristate::True)
-    return nts::Tristate::True;
-  if (state[0] == nts::Tristate::True && state[1] == nts::Tristate::False)
-    return nts::Tristate::True;
-  return nts::Tristate::Undefined;
+  if (states[0] == nts::Tristate::False && states[1] == nts::Tristate::False)
+    _pins[_output] = nts::Tristate::False;
+  else if (states[0] == nts::Tristate::False && states[1] == nts::Tristate::Undefined)
+    _pins[_output] = nts::Tristate::Undefined;
+  else if (states[0] == nts::Tristate::Undefined && states[1] == nts::Tristate::False)
+    _pins[_output] = nts::Tristate::Undefined;
+  else if (states[0] == nts::Tristate::Undefined && states[1] == nts::Tristate::Undefined)
+    _pins[_output] = nts::Tristate::Undefined;
+  else
+    _pins[_output] = nts::Tristate::True;
 }
 
-void nts::XorGate::setPin(std::size_t pin) {
-  for (std::size_t i = 0; i < _pins.size(); i++) {
-    if (_pins[i] == 0) {
-      _pins[i] = pin;
-      return;
+void nts::XorGate::simulate(std::size_t tick) {
+  for (auto &[pin, other] : _connection) {
+    if (pin != _output) {
+      other.first->simulate(tick);
+      _pins[pin] = other.first->compute(other.second);
     }
   }
+  std::vector<nts::Tristate> states;
+  for (auto &[pin, state] : _pins) {
+    if (pin != _output)
+      states.push_back(compute(pin));
+  }
+  if (states[0] == nts::Tristate::False && states[1] == nts::Tristate::False)
+    _pins[_output] = nts::Tristate::False;
+  else if (states[0] == nts::Tristate::True && states[1] == nts::Tristate::True)
+    _pins[_output] = nts::Tristate::False;
+  else if (states[0] == nts::Tristate::False && states[1] == nts::Tristate::True)
+    _pins[_output] = nts::Tristate::True;
+  else if (states[0] == nts::Tristate::True && states[1] == nts::Tristate::False)
+    _pins[_output] = nts::Tristate::True;
+  else
+    _pins[_output] = nts::Tristate::Undefined;
 }

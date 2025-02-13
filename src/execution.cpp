@@ -1,9 +1,8 @@
 #include "OPComponent.hpp"
-#include "SpecialComponent.hpp"
-#include "nts.hpp"
-#include <cstddef>
+#include "inputComponent.hpp"
 #include <iostream>
 #include <string>
+#include <sstream>
 #include <vector>
 #include <algorithm>
 
@@ -65,6 +64,15 @@ void doSimulate(std::map<std::string, std::shared_ptr<nts::IComponent>> componen
   }
 }
 
+// void checkInput(std::string word, std::map<std::string, std::shared_ptr<nts::IComponent>> components) {
+//   std::stringstream s(word);
+//   std::string info;
+//   std::vector<std::string> inf;
+//   while (std::getline(s, info, '='))
+//     inf.push_back(info);
+//   if ()
+// }
+
 /*
  * This function is the loop of the program.
  * @param void
@@ -77,12 +85,14 @@ int nts::execute(std::map<std::string, std::shared_ptr<nts::IComponent>> compone
   while (std::getline(std::cin, word)) {
     if (word == "exit")
       break;
-    if (word == "display")
+    else if (word == "display")
       doDisplay(components);
-    if (word == "simulate")
+    else if (word == "simulate")
       doSimulate(components);
-    if (word == "loop")
+    else if (word == "loop")
       continue;
+    else
+      checkInput(word, components);
     std::cout << "> ";
   }
   return 0;

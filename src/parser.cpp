@@ -1,11 +1,7 @@
 #include "Factory.hpp"
 #include "nts.hpp"
 #include <fstream>
-#include <memory>
 #include <sstream>
-#include <string>
-#include <utility>
-#include <vector>
 
 static
 std::map<std::string, std::shared_ptr<nts::IComponent>> getComponents(std::ifstream *strm)
@@ -17,12 +13,17 @@ std::map<std::string, std::shared_ptr<nts::IComponent>> getComponents(std::ifstr
     nts::Factory factory;
     while (std::getline(*strm, res)) {
         if (res.find(".links:") != res.npos)
-            return map;
+            break;
         if (res.size() == 0 || res[0] == '#')
             continue;
         std::stringstream line(res);
         line >> component >> name;
-        map[name] = factory.createComponent(component);
+        if (name.empty())
+          return map; // TODO: throw exeception
+        auto newComponent = factory.createComponent(component);
+        if (!newComponent)
+          return map; // TODO: throw exeception
+        map[name] = newComponent;
     }
     return map;
 }
@@ -46,6 +47,8 @@ void getLinks(std::ifstream *strm, std::map<std::string, std::shared_ptr<nts::IC
             continue;
         std::stringstream line(res);
         line >> cp1 >> cp2;
+        if (cp2.empty())
+          return; // TODO: throw exeception
         std::vector<std::string> inf_cp1;
         split_inf(cp1, ':', inf_cp1);
         std::vector<std::string> inf_cp2;
@@ -60,7 +63,7 @@ void getLinks(std::ifstream *strm, std::map<std::string, std::shared_ptr<nts::IC
  * @param std::string path
  * @return void or throw exception
  */
-std::map<std::string, std::shared_ptr<nts::IComponent>> parser(const std::string &path) {
+std::map<std::string, std::shared_ptr<nts::IComponent>> nts::parser(const std::string &path) {
   std::ifstream strm;
   std::string res;
   std::map<std::string, std::shared_ptr<nts::IComponent>> map;
