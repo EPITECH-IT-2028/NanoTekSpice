@@ -2,15 +2,15 @@ SRC = src/main.cpp \
 	src/factory.cpp \
 	src/parser.cpp \
 	src/execution.cpp \
-	src/components/Gate.cpp \
-	src/components/SpecialComponent.cpp \
-	src/Execute.cpp \
+	src/components/gate.cpp \
+	src/components/specialComponent.cpp \
+	src/execute.cpp \
 
 OBJ = $(SRC:.cpp=.o)
 
 NAME = nanotekspice
 
-CPPFLAGS = -W -Wall -Wextra  -std=c++20 -I./include -g
+CPPFLAGS = -W -Werror -Wall -Wextra  -std=c++20 -I./include -g
 
 CRITF = --coverage -lcriterion
 

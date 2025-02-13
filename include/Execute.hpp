@@ -10,21 +10,24 @@ namespace nts {
 class Execute {
 public:
   ~Execute() = default;
-  Execute(std::map<std::string, std::shared_ptr<nts::IComponent>> components) : _components(components) {};
+  Execute(std::map<std::string, std::shared_ptr<nts::IComponent>> components)
+      : _components(components) {};
   void doCommand(const std::string &command);
   void display();
   void simulate();
   void loop();
+  void operatorOverload(std::string);
 
 private:
   std::size_t _tick = 0;
   std::map<std::string, std::shared_ptr<nts::IComponent>> _components;
   const std::unordered_map<std::string, std::function<void()>> _command = {
-        {"display", [this]() {this->display();}},
-        {"simulate", [this]() {this->simulate();}},
-        {"loop", [this]() {this->loop();}},
-};;
+      {"display", [this]() { this->display(); }},
+      {"simulate", [this]() { this->simulate(); }},
+      {"loop", [this]() { this->loop(); }},
+  };
+  ;
 };
-}
+} // namespace nts
 
 #endif

@@ -1,7 +1,8 @@
 #include "Execute.hpp"
 #include "OPComponent.hpp"
+#include "inputComponent.hpp"
 #include "nts.hpp"
-#include <csignal>
+#include <cstring>
 #include <iostream>
 
 static void sort(std::vector<std::string> &list) {
@@ -14,7 +15,7 @@ static void sort(std::vector<std::string> &list) {
 }
 
 static void write(std::vector<std::string> display, std::string name,
-                    auto &components) {
+                  auto &components) {
   std::cout << name << std::endl;
   for (std::string name : display) {
     std::cout << "  " << name << ": ";
@@ -60,13 +61,42 @@ void nts::Execute::simulate() {
 }
 
 void nts::Execute::loop() {
-    while(true)
-        simulate();
+  while (true)
+    simulate();
+}
+
+static void setComponentState(std::string word, const auto &component) {
+  std::shared_ptr<nts::InputComponent> inputComponent =
+      std::static_pointer_cast<nts::InputComponent>(component.second);
+  int number = 0;
+  if (word.back() == 'U')
+    return inputComponent->setState(nts::Tristate::Undefined);
+
+  try {
+    number = std::stol(&word.back());
+  } catch (std::exception &e) {
+    return; // TODO : throw exception
+  }
+  if (number == 0)
+    inputComponent->setState(nts::Tristate::False);
+  else if (number == 1)
+    inputComponent->setState(nts::Tristate::True);
+  else
+    return; // TODO : throw exception
+}
+
+void nts::Execute::operatorOverload(std::string word) {
+  for (const auto &component : _components) {
+    std::string str = component.first;
+    if (word.find(str) != std::string::npos) {
+      setComponentState(word, component);
+    }
+  }
 }
 
 void nts::Execute::doCommand(const std::string &command) {
   auto res = _command.find(command);
   if (res == _command.end())
-    return;
+    return operatorOverload(command);
   (res->second)();
 }

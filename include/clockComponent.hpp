@@ -9,6 +9,6 @@ public:
   ~ClockComponent() = default;
   ClockComponent() = default;
 };
-}
+} // namespace nts
 
 #endif

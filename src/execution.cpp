@@ -1,5 +1,5 @@
-#include <iostream>
 #include "Execute.hpp"
+#include <iostream>
 
 /*
  * This function is the loop of the program.

@@ -6,19 +6,12 @@
 namespace nts {
 class AComponent : public nts::IComponent {
 public:
-  virtual ~AComponent() = default;
+  ~AComponent() = default;
 
-  virtual void simulate(std::size_t tick) override {};
-  virtual nts::Tristate compute(std::size_t pin) override {};
-  virtual void setLink(std::size_t pin, nts::IComponent &other,
-                       std::size_t otherPin) override {};
   virtual void setPin(std::size_t pin) = 0;
 
 protected:
   std::map<std::size_t, std::pair<nts::IComponent *, std::size_t>> _connection;
-
-private:
-  std::size_t _tick = 0;
 };
 } // namespace nts
 
