@@ -8,8 +8,8 @@ namespace nts {
 class InputComponent : public SpecialComponent {
 public:
   ~InputComponent() = default;
-  InputComponent() {setState(nts::Tristate::Undefined);};
+  InputComponent() { setState(nts::Tristate::Undefined); };
 };
-}
+} // namespace nts
 
 #endif

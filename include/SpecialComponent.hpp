@@ -7,10 +7,12 @@ namespace nts {
 class SpecialComponent : public nts::AComponent {
 public:
   ~SpecialComponent() = default;
+
   nts::Tristate compute(std::size_t pin) override;
   void setLink(std::size_t pin, nts::IComponent &other,
-                       std::size_t otherPin) override;
+               std::size_t otherPin) override;
   void setPin(std::size_t pin) override;
+  void simulate(std::size_t tick) override;
   void setState(nts::Tristate state);
 
 protected:

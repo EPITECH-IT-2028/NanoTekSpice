@@ -4,7 +4,6 @@
 #include "nts.hpp"
 #include <cstring>
 #include <iostream>
-#include <sstream>
 
 static void sort(std::vector<std::string> &list) {
   for (std::size_t i = 0; i < list.size(); i++) {
@@ -66,19 +65,31 @@ void nts::Execute::loop() {
     simulate();
 }
 
+static void setComponentState(std::string word, const auto &component) {
+  std::shared_ptr<nts::InputComponent> inputComponent =
+      std::static_pointer_cast<nts::InputComponent>(component.second);
+  int number = 0;
+  if (word.back() == 'U')
+    return inputComponent->setState(nts::Tristate::Undefined);
+
+  try {
+    number = std::stol(&word.back());
+  } catch (std::exception &e) {
+    return; // TODO : throw exception
+  }
+  if (number == 0)
+    inputComponent->setState(nts::Tristate::False);
+  else if (number == 1)
+    inputComponent->setState(nts::Tristate::True);
+  else
+    return; // TODO : throw exception
+}
+
 void nts::Execute::operatorOverload(std::string word) {
   for (const auto &component : _components) {
     std::string str = component.first;
     if (word.find(str) != std::string::npos) {
-      std::shared_ptr<nts::InputComponent> inputComponent =
-          std::static_pointer_cast<nts::InputComponent>(component.second);
-      int number = std::stol(&word.back());
-      if (number == 0)
-        inputComponent->setState(nts::Tristate::False);
-      else if (number == 1)
-        inputComponent->setState(nts::Tristate::True);
-      else
-        inputComponent->setState(nts::Tristate::Undefined);
+      setComponentState(word, component);
     }
   }
 }
