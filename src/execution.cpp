@@ -1,12 +1,9 @@
 #include "OPComponent.hpp"
-#include "inputComponent.hpp"
-#include <iostream>
-#include <string>
-#include <sstream>
-#include <vector>
 #include <algorithm>
+#include <iostream>
+#include <vector>
 
-void sort(std::vector<std::string> &list) {
+static void sort(std::vector<std::string> &list) {
   for (std::size_t i = 0; i < list.size(); i++) {
     for (std::size_t j = i + 1; j < list.size(); j++) {
       if (list[i] > list[j])
@@ -15,11 +12,27 @@ void sort(std::vector<std::string> &list) {
   }
 }
 
-void doDisplay(std::map<std::string, std::shared_ptr<nts::IComponent>> &components) {
+static void display(std::vector<std::string> display, std::string name,
+                    auto &components) {
+  std::cout << name << std::endl;
+  for (std::string name : display) {
+    std::cout << "   " << name << ": ";
+    nts::Tristate state = components[name]->compute(1);
+    if (state == nts::Tristate::Undefined)
+      std::cout << "U";
+    else
+      std::cout << state;
+    std::cout << std::endl;
+  }
+}
+
+static void
+doDisplay(std::map<std::string, std::shared_ptr<nts::IComponent>> &components) {
   std::vector<std::string> disp_input;
   std::vector<std::string> disp_output;
+
   for (const auto &component : components) {
-      std::string name = component.first;
+    std::string name = component.first;
     if (dynamic_cast<nts::OPComponent *>(component.second.get())) {
       disp_output.push_back(name);
       continue;
@@ -29,33 +42,16 @@ void doDisplay(std::map<std::string, std::shared_ptr<nts::IComponent>> &componen
   }
   sort(disp_input);
   sort(disp_output);
-  //std::cout << "tick: " << tick << std::endl;
-  std::cout << "input(s):" << std::endl;
-  for (std::string name : disp_input) {
-    std::cout << "   " << name << ": ";
-    nts::Tristate state = components[name]->compute(1);
-    if (state == nts::Tristate::Undefined)
-      std::cout << "U";
-    else
-     std::cout << state;
-    std::cout << std::endl;
-  }
-  std::cout << "output(s):" << std::endl;
-  for (std::string name : disp_output) {
-    std::cout << "   " << name << ": ";
-    nts::Tristate state = components[name]->compute(1);
-    if (state == nts::Tristate::Undefined)
-      std::cout << "U";
-    else
-     std::cout << state;
-    std::cout << std::endl;
-  }
+  // std::cout << "tick: " << tick << std::endl;
+  display(disp_input, "input(s):", components);
+  display(disp_output, "output(s):", components);
 }
 
-void doSimulate(std::map<std::string, std::shared_ptr<nts::IComponent>> components) {
+void doSimulate(
+    std::map<std::string, std::shared_ptr<nts::IComponent>> components) {
   std::vector<std::string> outputs;
   for (const auto &component : components) {
-      std::string name = component.first;
+    std::string name = component.first;
     if (dynamic_cast<nts::OPComponent *>(component.second.get()))
       outputs.push_back(name);
   }
@@ -64,21 +60,13 @@ void doSimulate(std::map<std::string, std::shared_ptr<nts::IComponent>> componen
   }
 }
 
-// void checkInput(std::string word, std::map<std::string, std::shared_ptr<nts::IComponent>> components) {
-//   std::stringstream s(word);
-//   std::string info;
-//   std::vector<std::string> inf;
-//   while (std::getline(s, info, '='))
-//     inf.push_back(info);
-//   if ()
-// }
-
 /*
  * This function is the loop of the program.
  * @param void
  * @return 0
  */
-int nts::execute(std::map<std::string, std::shared_ptr<nts::IComponent>> components) {
+int nts::execute(
+    std::map<std::string, std::shared_ptr<nts::IComponent>> components) {
   std::string word;
 
   std::cout << "> ";
@@ -91,8 +79,6 @@ int nts::execute(std::map<std::string, std::shared_ptr<nts::IComponent>> compone
       doSimulate(components);
     else if (word == "loop")
       continue;
-    else
-      checkInput(word, components);
     std::cout << "> ";
   }
   return 0;

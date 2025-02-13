@@ -4,7 +4,6 @@ SRC = src/main.cpp \
 	src/execution.cpp \
 	src/components/Gate.cpp \
 	src/components/SpecialComponent.cpp \
-	src/components/AComponent.cpp \
 
 OBJ = $(SRC:.cpp=.o)
 
