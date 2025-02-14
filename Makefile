@@ -3,6 +3,7 @@ SRC = src/main.cpp \
 	src/parser.cpp \
 	src/execution.cpp \
 	src/components/Gate.cpp \
+	src/components/Gates.cpp \
 	src/components/SpecialComponent.cpp \
 	src/Execute.cpp \
 	src/error.cpp \
