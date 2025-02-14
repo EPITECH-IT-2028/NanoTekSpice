@@ -44,6 +44,8 @@ getLinks(std::ifstream *strm,
   std::string res;
   std::string cp1;
   std::string cp2;
+  std::vector<std::string> inf_cp1;
+  std::vector<std::string> inf_cp2;
 
   while (std::getline(*strm, res)) {
     if (res.size() == 0 || res[0] == '#')
@@ -52,10 +54,12 @@ getLinks(std::ifstream *strm,
     line >> cp1 >> cp2;
     if (cp2.empty())
       throw nts::Error("No link found");
-    std::vector<std::string> inf_cp1;
     split_inf(cp1, ':', inf_cp1);
-    std::vector<std::string> inf_cp2;
     split_inf(cp2, ':', inf_cp2);
+    if (map.find(inf_cp1[0]) == map.end() || map.find(inf_cp2[0]) == map.end())
+      throw nts::Error("Component not found");
+    if (map.find(inf_cp1[1]) == map.end() || map.find(inf_cp2[1]) == map.end())
+      throw nts::Error("Invalid link");
     map[inf_cp1[0]]->setLink(std::stol(inf_cp1[1]), *map[inf_cp2[0]],
                              std::stol(inf_cp2[1]));
     map[inf_cp2[0]]->setLink(std::stol(inf_cp2[1]), *map[inf_cp1[0]],
