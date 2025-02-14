@@ -58,8 +58,6 @@ getLinks(std::ifstream *strm,
     split_inf(cp2, ':', inf_cp2);
     if (map.find(inf_cp1[0]) == map.end() || map.find(inf_cp2[0]) == map.end())
       throw nts::Error("Component not found");
-    if (map.find(inf_cp1[1]) == map.end() || map.find(inf_cp2[1]) == map.end())
-      throw nts::Error("Invalid link");
     map[inf_cp1[0]]->setLink(std::stol(inf_cp1[1]), *map[inf_cp2[0]],
                              std::stol(inf_cp2[1]));
     map[inf_cp2[0]]->setLink(std::stol(inf_cp2[1]), *map[inf_cp1[0]],
