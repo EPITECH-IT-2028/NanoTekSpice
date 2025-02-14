@@ -1,6 +1,6 @@
 #include "Execute.hpp"
 #include "Error.hpp"
-#include "OPComponent.hpp"
+#include "OutputComponent.hpp"
 #include "inputComponent.hpp"
 #include "nts.hpp"
 #include <cstring>
@@ -35,7 +35,7 @@ void nts::Execute::display() {
 
   for (const auto &component : _components) {
     std::string name = component.first;
-    if (dynamic_cast<nts::OPComponent *>(component.second.get())) {
+    if (dynamic_cast<nts::OutputComponent *>(component.second.get())) {
       disp_output.push_back(name);
       continue;
     }
@@ -53,7 +53,7 @@ void nts::Execute::simulate() {
   std::vector<std::string> outputs;
   for (const auto &component : _components) {
     std::string name = component.first;
-    if (dynamic_cast<nts::OPComponent *>(component.second.get()))
+    if (dynamic_cast<nts::OutputComponent *>(component.second.get()))
       outputs.push_back(name);
   }
   for (std::string name : outputs)

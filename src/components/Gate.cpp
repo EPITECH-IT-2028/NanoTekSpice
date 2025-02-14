@@ -1,11 +1,11 @@
 #include "Gate.hpp"
-#include "OPComponent.hpp"
+#include "OutputComponent.hpp"
 #include "nts.hpp"
 #include <vector>
 
 void nts::Gate::setLink(std::size_t pin, nts::IComponent &other,
                         std::size_t otherPin) {
-  if (dynamic_cast<nts::OPComponent *>(&other))
+  if (dynamic_cast<nts::OutputComponent *>(&other))
     _output = pin;
   setPin(pin);
   _connection[pin] = std::make_pair(&other, otherPin);

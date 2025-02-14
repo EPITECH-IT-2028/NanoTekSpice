@@ -1,6 +1,6 @@
 #include "Factory.hpp"
 #include "Gate.hpp"
-#include "OPComponent.hpp"
+#include "OutputComponent.hpp"
 #include "clockComponent.hpp"
 #include "falseComponent.hpp"
 #include "inputComponent.hpp"
@@ -11,7 +11,7 @@ const std::unordered_map<std::string,
                          std::function<std::shared_ptr<nts::IComponent>()>>
     nts::Factory::_creators = {
         {"input", []() { return std::make_shared<InputComponent>(); }},
-        {"output", []() { return std::make_shared<OPComponent>(); }},
+        {"output", []() { return std::make_shared<OutputComponent>(); }},
         {"true", []() { return std::make_shared<TrueComponent>(); }},
         {"false", []() { return std::make_shared<FalseComponent>(); }},
         {"clock", []() { return std::make_shared<ClockComponent>(); }},

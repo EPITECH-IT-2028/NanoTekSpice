@@ -1,13 +1,13 @@
-#ifndef OPCOMPONENTS_HPP_
-#define OPCOMPONENTS_HPP_
+#ifndef OUTPUTCOMPONENTS_HPP_
+#define OUTPUTCOMPONENTS_HPP_
 
 #include "SpecialComponent.hpp"
 
 namespace nts {
-class OPComponent : public SpecialComponent {
+class OutputComponent : public SpecialComponent {
 public:
-  ~OPComponent() = default;
-  OPComponent() {setState(nts::Tristate::Undefined);};
+  ~OutputComponent() = default;
+  OutputComponent() { setState(nts::Tristate::Undefined); };
 
   void simulate(std::size_t tick) override {
     auto &other = _connection.begin()->second;

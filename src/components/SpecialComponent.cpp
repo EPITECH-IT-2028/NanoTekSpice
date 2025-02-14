@@ -1,5 +1,4 @@
 #include "SpecialComponent.hpp"
-#include <iterator>
 
 nts::Tristate nts::SpecialComponent::compute(std::size_t pin) {
   (void)pin;
