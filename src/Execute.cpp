@@ -73,7 +73,7 @@ static void setComponentState(std::string word, const auto &component) {
       dynamic_cast<nts::SpecialComponent *>(component.second.get());
   int number = 0;
   if (word.back() == 'U')
-    return specialComponent->setState(nts::Tristate::Undefined);
+    return specialComponent->setLastState(nts::Tristate::Undefined);
 
   try {
     number = std::stol(&word.back());
@@ -81,9 +81,9 @@ static void setComponentState(std::string word, const auto &component) {
     throw nts::Error("Invalid input");
   }
   if (number == 0)
-    specialComponent->setState(nts::Tristate::False);
+    specialComponent->setLastState(nts::Tristate::False);
   else if (number == 1)
-    specialComponent->setState(nts::Tristate::True);
+    specialComponent->setLastState(nts::Tristate::True);
   else
     throw nts::Error("Invalid input");
 }
