@@ -1,6 +1,8 @@
 #include "Execute.hpp"
 #include "Error.hpp"
 #include "OutputComponent.hpp"
+#include "SpecialComponent.hpp"
+#include "clockComponent.hpp"
 #include "inputComponent.hpp"
 #include "nts.hpp"
 #include <cstring>
@@ -67,11 +69,11 @@ void nts::Execute::loop() {
 }
 
 static void setComponentState(std::string word, const auto &component) {
-  std::shared_ptr<nts::InputComponent> inputComponent =
-      std::static_pointer_cast<nts::InputComponent>(component.second);
+  nts::SpecialComponent *specialComponent =
+      dynamic_cast<nts::SpecialComponent *>(component.second.get());
   int number = 0;
   if (word.back() == 'U')
-    return inputComponent->setState(nts::Tristate::Undefined);
+    return specialComponent->setState(nts::Tristate::Undefined);
 
   try {
     number = std::stol(&word.back());
@@ -79,9 +81,9 @@ static void setComponentState(std::string word, const auto &component) {
     throw nts::Error("Invalid input");
   }
   if (number == 0)
-    inputComponent->setState(nts::Tristate::False);
+    specialComponent->setState(nts::Tristate::False);
   else if (number == 1)
-    inputComponent->setState(nts::Tristate::True);
+    specialComponent->setState(nts::Tristate::True);
   else
     throw nts::Error("Invalid input");
 }
@@ -90,6 +92,9 @@ void nts::Execute::operatorOverload(std::string word) {
   for (const auto &component : _components) {
     std::string str = component.first;
     if (word.find(str) != std::string::npos) {
+      if (!dynamic_cast<nts::InputComponent *>(component.second.get()) &&
+          !dynamic_cast<nts::ClockComponent *>(component.second.get()))
+        throw nts::Error("Invalid input");
       setComponentState(word, component);
     }
   }
