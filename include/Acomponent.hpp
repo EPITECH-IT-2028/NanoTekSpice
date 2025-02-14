@@ -13,6 +13,7 @@ public:
 protected:
   std::map<std::size_t, std::pair<nts::IComponent *, std::size_t>> _connection;
 };
+
 } // namespace nts
 
 #endif

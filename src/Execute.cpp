@@ -1,4 +1,5 @@
 #include "Execute.hpp"
+#include "Error.hpp"
 #include "OPComponent.hpp"
 #include "inputComponent.hpp"
 #include "nts.hpp"
@@ -75,14 +76,14 @@ static void setComponentState(std::string word, const auto &component) {
   try {
     number = std::stol(&word.back());
   } catch (std::exception &e) {
-    return; // TODO : throw exception
+    throw nts::Error("Invalid input");
   }
   if (number == 0)
     inputComponent->setState(nts::Tristate::False);
   else if (number == 1)
     inputComponent->setState(nts::Tristate::True);
   else
-    return; // TODO : throw exception
+    throw nts::Error("Invalid input");
 }
 
 void nts::Execute::operatorOverload(std::string word) {

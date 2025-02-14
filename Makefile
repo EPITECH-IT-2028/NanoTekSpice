@@ -5,6 +5,7 @@ SRC = src/main.cpp \
 	src/components/Gate.cpp \
 	src/components/SpecialComponent.cpp \
 	src/Execute.cpp \
+	src/error.cpp \
 
 OBJ = $(SRC:.cpp=.o)
 
