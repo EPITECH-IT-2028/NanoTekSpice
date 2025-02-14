@@ -1,5 +1,6 @@
 #include "Factory.hpp"
 #include "Gate.hpp"
+#include "Gates.hpp"
 #include "OutputComponent.hpp"
 #include "clockComponent.hpp"
 #include "falseComponent.hpp"
@@ -18,7 +19,11 @@ const std::unordered_map<std::string,
         {"and", []() { return std::make_shared<AndGate>(); }},
         {"or", []() { return std::make_shared<OrGate>(); }},
         {"xor", []() { return std::make_shared<XorGate>(); }},
-        {"not", []() { return std::make_shared<NotGate>(); }}};
+        {"not", []() { return std::make_shared<NotGate>(); }},
+        {"4081", []() { return std::make_shared<Gates_4081>(); }},
+        {"4071", []() { return std::make_shared<Gates_4071>(); }},
+        {"4030", []() { return std::make_shared<Gates_4030>(); }},
+        {"4069", []() { return std::make_shared<Gates_4069>(); }}};
 
 std::shared_ptr<nts::IComponent>
 nts::Factory::createComponent(const std::string &type) {
